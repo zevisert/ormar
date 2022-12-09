@@ -3,7 +3,7 @@ name = "ormar"
 
 [tool.poetry]
 name = "ormar"
-version = "0.12.0"
+version = "0.12.1"
 description = "A simple async ORM with fastapi in mind and pydantic validation."
 authors = ["Radosław Drążkiewicz <collerek@gmail.com>"]
 license = "MIT"
@@ -11,9 +11,7 @@ readme = "README.md"
 homepage = "https://github.com/collerek/ormar"
 repository = "https://github.com/collerek/ormar"
 documentation = "https://collerek.github.io/ormar/"
-packages = [
-    { include="ormar" }
-]
+packages = [{ include = "ormar" }]
 keywords = [
     "orm",
     "sqlalchemy",
@@ -104,7 +102,7 @@ types-toml = "^0.10.8"
 mkdocs = "^1.4.1"
 mkdocs-material = ">=8.1.2,<8.6"
 mkdocs-material-extensions = "^1.0.3"
-mkdocstrings = {version = "==0.19.0", extras = ["python"]}
+mkdocstrings = { version = "==0.19.0", extras = ["python"] }
 mkdocs-gen-files = "^0.4.0"
 mkdocs-literate-nav = "^0.5.0"
 mkdocs-section-index = "^0.3.4"
@@ -163,4 +161,3 @@ ignore_missing_imports = true
 based_on_style = "pep8"
 disable_ending_comma_heuristic = true
 split_arguments_when_comma_terminated = true
-

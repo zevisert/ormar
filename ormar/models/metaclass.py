@@ -199,7 +199,7 @@ def verify_constraint_names(
 
 def get_constraint_copy(
     constraint: ColumnCollectionConstraint,
-) -> Union[UniqueColumns, IndexColumns, CheckColumns]:
+) -> Union[None, UniqueColumns, IndexColumns, CheckColumns]:
     """
     Copy the constraint and unpacking it's values
 
@@ -218,9 +218,13 @@ def get_constraint_copy(
     checks = (key if isinstance(constraint, key) else None for key in constraints)
     target_class = next((target for target in checks if target is not None), None)
     constructor: Optional[Callable] = constraints.get(target_class)
+    
     if not constructor:
-        raise ValueError(f"{constraint} must be a ColumnCollectionMixin!")
-
+        if not isinstance(constraint, ColumnCollectionConstraint):
+            raise ValueError(f"{constraint} must be a ColumnCollectionMixin!")
+        
+        return None
+    
     return constructor(constraint)
 
 
@@ -251,7 +255,13 @@ def update_attrs_from_base_meta(  # noqa: CCR001
                     model_fields=model_fields,
                     parent_value=parent_value,
                 )
-                parent_value = [get_constraint_copy(value) for value in parent_value]
+                parent_value = list(
+                    filter(
+                        None,
+                        (get_constraint_copy(value) for value in parent_value)
+                    )
+                )
+
             if isinstance(current_value, list):
                 current_value.extend(parent_value)
             else:
